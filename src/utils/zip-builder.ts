@@ -2,16 +2,19 @@ import path from 'path';
 import AdmZip from 'adm-zip';
 import { FilterEngine } from './filter';
 import { TreeNode } from './builder';
+import { Annotator } from './annotator';
 
 export class ZipTreeBuilder {
   private filter: FilterEngine;
   private zipPath: string;
   private maxDepth: number;
+  private annotator: Annotator;
 
-  constructor(zipPath: string, filter: FilterEngine, maxDepth: number = Infinity) {
+  constructor(zipPath: string, filter: FilterEngine, maxDepth: number = Infinity, annotator: Annotator) {
     this.zipPath = path.resolve(zipPath);
     this.filter = filter;
     this.maxDepth = maxDepth;
+    this.annotator = annotator;
   }
 
   public build(): TreeNode | null {
@@ -53,6 +56,7 @@ export class ZipTreeBuilder {
         name: path.basename(entryName),
         type: isDirectory ? 'directory' : 'file',
         relativePath: entryName,
+        annotation: this.annotator.getAnnotation(entryName), // Fetch annotation if it exists
       };
 
       if (!isDirectory) {

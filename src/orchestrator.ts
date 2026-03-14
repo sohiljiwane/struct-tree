@@ -7,6 +7,7 @@ import { TreeBuilder } from './utils/builder';
 import { MarkdownFormatter } from './utils/formatter';
 import { Debouncer } from './utils/debouncer';
 import { ZipTreeBuilder } from './utils/zip-builder';
+import { Annotator } from './utils/annotator';
 
 export class Orchestrator {
   public static run(config: AppConfig) {
@@ -14,7 +15,8 @@ export class Orchestrator {
       console.log(`\n🔍 Analyzing directory: ${path.resolve(config.targetPath)}...`);
 
       const filterEngine = new FilterEngine(config.targetPath, config.ignorePatterns);
-      const builder = new TreeBuilder(config.targetPath, filterEngine, config.maxDepth);
+      const annotator = new Annotator(config.targetPath, config.useAnnotations);
+      const builder = new TreeBuilder(config.targetPath, filterEngine, config.maxDepth, annotator);
       const formatter = new MarkdownFormatter();
       const resolvedOutputPath = path.resolve(config.outputPath);
 
@@ -23,10 +25,10 @@ export class Orchestrator {
         let rawTree;
         if (config.isZip) {
           console.log(`📦 ZIP mode detected. Extracting in memory...`);
-          const zipBuilder = new ZipTreeBuilder(config.targetPath, filterEngine, config.maxDepth);
+          const zipBuilder = new ZipTreeBuilder(config.targetPath, filterEngine, config.maxDepth, annotator);
           rawTree = zipBuilder.build();
         } else {
-          const builder = new TreeBuilder(config.targetPath, filterEngine, config.maxDepth);
+          const builder = new TreeBuilder(config.targetPath, filterEngine, config.maxDepth, annotator);
           rawTree = builder.build();
         }
 
