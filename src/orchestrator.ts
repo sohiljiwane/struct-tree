@@ -6,6 +6,7 @@ import { FilterEngine } from './utils/filter';
 import { TreeBuilder } from './utils/builder';
 import { MarkdownFormatter } from './utils/formatter';
 import { Debouncer } from './utils/debouncer';
+import { ZipTreeBuilder } from './utils/zip-builder';
 
 export class Orchestrator {
   public static run(config: AppConfig) {
@@ -19,8 +20,20 @@ export class Orchestrator {
 
       // Helper function to build and write the tree
       const generateAndWriteTree = () => {
-        const rawTree = builder.build();
-        if (!rawTree) return;
+        let rawTree;
+        if (config.isZip) {
+          console.log(`📦 ZIP mode detected. Extracting in memory...`);
+          const zipBuilder = new ZipTreeBuilder(config.targetPath, filterEngine, config.maxDepth);
+          rawTree = zipBuilder.build();
+        } else {
+          const builder = new TreeBuilder(config.targetPath, filterEngine, config.maxDepth);
+          rawTree = builder.build();
+        }
+
+        if (!rawTree) {
+          console.warn(`⚠️  Warning: The target path is completely ignored or empty. No tree to generate.`);
+          return;
+        }
         
         const markdownOutput = formatter.format(rawTree);
         const outputDir = path.dirname(resolvedOutputPath);
