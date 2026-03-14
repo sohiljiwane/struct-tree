@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { FilterEngine } from './filter';
+import { Annotator } from './annotator';
 
 // 1. The Strict Data Contract
 export type NodeType = 'file' | 'directory';
@@ -20,11 +21,13 @@ export class TreeBuilder {
   private filter: FilterEngine;
   private rootPath: string;
   private maxDepth: number;
+  private annotator: Annotator;
 
-  constructor(rootPath: string, filter: FilterEngine, maxDepth: number = Infinity) {
+  constructor(rootPath: string, filter: FilterEngine, maxDepth: number = Infinity, annotator: Annotator) {
     this.rootPath = path.resolve(rootPath);
     this.filter = filter;
     this.maxDepth = maxDepth;
+    this.annotator = annotator;
   }
 
   /**
@@ -59,6 +62,7 @@ export class TreeBuilder {
       name,
       type: isDirectory ? 'directory' : 'file',
       relativePath,
+      annotation: this.annotator.getAnnotation(relativePath), // Fetch annotation if it exists
     };
 
     // 3. Handle File specific properties

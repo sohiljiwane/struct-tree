@@ -1,0 +1,7 @@
+{
+  ".": "Root of the md-tree CLI tool",
+  "src": "TypeScript source code",
+  "src/cli.ts": "Entry point for Commander.js terminal arguments",
+  "src/utils": "Core worker classes",
+  "src/utils/debouncer.ts": "Prevents CPU spikes during watch mode"
+}
