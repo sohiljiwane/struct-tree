@@ -1,0 +1,22 @@
+# Node modules
+node_modules
+
+zip-structure.md
+
+# Build output
+/dist
+
+# Environment Variables
+.env
+.env.local
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE Folders
+.vscode/
+.idea/
+
+# npm debug logs
+npm-debug.log*
