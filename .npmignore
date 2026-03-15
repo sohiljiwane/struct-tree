@@ -1,0 +1,7 @@
+# Ignore raw source code (npm only needs the compiled dist folder)
+src/
+tsconfig.json
+
+# Ignore local config files
+.structurerc
+.gitignore

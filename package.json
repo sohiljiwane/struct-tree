@@ -4,8 +4,8 @@
   "description": "A dynamic, LLM-friendly CLI tool that generates auto-syncing Markdown representations of your project structure.",
   "main": "dist/orchestrator.js",
   "bin": {
-    "st": "./dist/cli.js",
-    "struct-tree": "./dist/cli.js"
+    "st": "dist/cli.js",
+    "struct-tree": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc",
