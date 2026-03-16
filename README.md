@@ -35,18 +35,19 @@ Or, run it instantly without installing via `npx`:
 npx struct-tree . -o docs/structure.md
 ```
 🛠️ Usage
-Basic Signature:
-st [targetPath] [options]
+Basic Signature: `st` `[targetPath]` `[options]`
 
-Flag / Option	Alias	Description	Default
---output <path>	-o	Destination path for the generated Markdown file.	./structure.md
---depth <num>	-d	Maximum directory recursion depth.	Infinity
---watch	-w	Enable auto-syncing watch mode.	false
---ignore <...>	-i	Add extra ignore patterns (e.g., -i dist coverage).	[]
---annotate	-a	Parse .structurerc for custom folder descriptions.	false
---zip		Force in-memory ZIP parsing mode.	false
+| Flag / Option |	Alias |	Description |	Default |
+| :---          | :---  | :---        | :---    |
+`--output <path>` |	`-o` |	Destination path for the generated Markdown file. |	`./structure.md`
+`--depth <num>` |	`-d` |	Maximum directory recursion depth. | Infinity
+`--watch` |	`-w` |	Enable auto-syncing watch mode. |	false
+`--ignore <...>` |	`-i` |	Add extra ignore patterns (e.g., -i dist coverage). |	[]
+`--annotate` |	`-a` |	Parse .structurerc for custom folder descriptions. |	false
+`--zip` |	|	Force in-memory ZIP parsing mode. |	false
+`--help` | `-h` | Display the help menu and all available commands. | N/A
+
 📖 Common Workflows
-
 1. The Quick LLM Context Grab
 Generate a 2-level deep map of the current directory to copy/paste into an AI prompt.
 
